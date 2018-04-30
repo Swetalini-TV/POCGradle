@@ -1,0 +1,53 @@
+import java.util.concurrent.TimeUnit
+
+/*
+ * Author : Swetalini
+ */
+
+plugins {
+    id 'java'
+
+    id 'application'
+}
+
+// Define the main class for the application
+mainClassName = ''
+
+
+dependencies {
+    // This dependency is found on compile classpath of this component and consumers.
+    compile 'com.google.guava:guava:23.0'
+
+    // Use TestNG framework, also requires calling test.useTestNG() below
+    testCompile 'org.testng:testng:6.10'
+
+    // https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson2
+    compile group: 'com.google.http-client', name: 'google-http-client-jackson2', version: '1.17.0-rc'
+
+    // https://mvnrepository.com/artifact/org.json/json
+    compile group: 'org.json', name: 'json', version: '20090211'
+
+    // https://mvnrepository.com/artifact/postgresql/postgresql
+    compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+
+    jcenter()
+}
+
+task sample(type:Test) {
+
+        useTestNG {
+            options {
+                reports.html.destination = file("$testReportDir/APITestsResults")
+                useDefaultListeners = true
+                excludeGroups << excludedGroups
+                includeGroups << includedGroups
+
+            }
+        }
+
+}
+
