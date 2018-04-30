@@ -1,3 +1,4 @@
+import java.awt.Desktop
 import java.util.concurrent.TimeUnit
 
 /*
@@ -40,14 +41,29 @@ repositories {
 task sample(type:Test) {
 
         useTestNG {
+
             options {
+
                 reports.html.destination = file("$testReportDir/APITestsResults")
                 useDefaultListeners = true
                 excludeGroups << excludedGroups
                 includeGroups << includedGroups
+                openResultsInBrowser()
 
             }
         }
 
 }
 
+def openResultsInBrowser() {
+    try {
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            Desktop.getDesktop().browse(new URI("http://localhost:63342/" + "POC_JavaLibsGradle/build/reports/tests/APITestsResults/index.html"));
+        }
+    }
+    catch (final Exception ex) {
+        ex.printStackTrace()
+        ex.printStackTrace()
+    }
+
+}
