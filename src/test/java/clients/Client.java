@@ -11,23 +11,19 @@ import java.util.Map;
 
 public class Client {
     private static GenericUrl genericUrl;
-    private JsonFactory jsonFactory;
-    private HttpTransport httpTransport;
     private HttpRequestFactory requestFactory;
     private HttpRequest request;
     private HttpResponse response;
 
     public Client(String url) {
         genericUrl = new GenericUrl(url);
-        httpTransport = new NetHttpTransport();
-        jsonFactory = new JacksonFactory();
-        requestFactory =
-                getRequestFactory();
+        requestFactory = getRequestFactory();
     }
 
     private HttpRequestFactory getRequestFactory() {
+        HttpTransport httpTransport = new NetHttpTransport();
+        JsonFactory jsonFactory = new JacksonFactory();
         return httpTransport.createRequestFactory(new HttpRequestInitializer() {
-
             public void initialize(HttpRequest request) {
                 request.setParser(new JsonObjectParser(jsonFactory));
             }
