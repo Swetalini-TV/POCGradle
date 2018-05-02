@@ -5,7 +5,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import factory.URLFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -19,8 +18,7 @@ public class Client {
     private HttpResponse response;
 
     public Client(String url) {
-        URLFactory urlFactory = new URLFactory(url);
-        genericUrl = urlFactory.getURL();
+        genericUrl = new GenericUrl(url);
         httpTransport = new NetHttpTransport();
         jsonFactory = new JacksonFactory();
         requestFactory =
