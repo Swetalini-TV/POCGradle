@@ -33,14 +33,8 @@ public class ResponseOptions {
         return this;
     }
 
-    public ResponseOptions matches(String jsonPath, String expectedValue) throws IOException {
-        String actualValue = JsonPath.parse(responseBody).read(jsonPath);
-        Assert.assertEquals(actualValue, expectedValue);
-        return this;
-    }
-
-    public ResponseOptions matches(String jsonPath, int expectedValue) throws IOException {
-        int actualValue = JsonPath.parse(responseBody).read(jsonPath);
+    public <T> ResponseOptions matches(String jsonPath, T expectedValue) throws IOException {
+        T actualValue = JsonPath.parse(responseBody).read(jsonPath);
         Assert.assertEquals(actualValue, expectedValue);
         return this;
     }
