@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-public class TestYoutubeSearchAPI {
+public class TestYoutubeAPIs {
 
     @Test
     public void testSearchWithGivenQuery() throws IOException {
