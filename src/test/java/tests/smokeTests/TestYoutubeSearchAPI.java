@@ -24,6 +24,7 @@ public class TestYoutubeSearchAPI {
                 .get()
                 .then()
                 .statusCode(200)
-                .matches("$.items[0].snippet.title", "Cutes dogs | Cutest dog in the world | Cute dogs clips 2016");
+                .matches("$.items[0].snippet.title", "Cutes dogs | Cutest dog in the world | Cute dogs clips 2016")
+                .matches("$.items[0].snippet.thumbnails.default.width", 120);
     }
 }
