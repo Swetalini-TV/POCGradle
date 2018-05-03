@@ -37,11 +37,38 @@ public class TestYoutubeAPIs {
                 .given(channelUrl)
                 .withParam("key", API_KEY)
                 .withParam("part", "id, snippet,statistics")
-                .withParam("id","UCV-oV8yecSfMZnzdKAhO_4A")
+                .withParam("id", "UCV-oV8yecSfMZnzdKAhO_4A")
                 .get()
                 .then()
                 .statusCode(200)
-                .matches("$.items[0].snippet.title","Interesting Facts")
-                .matches("$.items[0].statistics.viewCount","267490408");
+                .matches("$.items[0].snippet.title", "Interesting Facts")
+                .matches("$.items[0].statistics.viewCount", "267490408");
+    }
+
+    @Test
+    public void testSearchAndChannelAPIChaining() throws IOException {
+        String searchUrl = "https://www.googleapis.com/youtube/v3/search";
+        String channelUrl = "https://www.googleapis.com/youtube/v3/channels";
+        String API_KEY = dbReader.getKey();
+
+        Client.when()
+                .given(searchUrl)
+                .withParam("key", API_KEY)
+                .withParam("part", "snippet")
+                .withParam("q", "dogs")
+                .withParam("type", "video")
+                .withParam("maxResults", "5")
+                .get()
+                .then()
+                .statusCode(200)
+                .buildNewRequest()
+                .given(channelUrl)
+                .withExtractedParam("id", "$.items[3].snippet.channelId")
+                .withParam("key", API_KEY)
+                .withParam("part", "id, snippet,statistics")
+                .get()
+                .then()
+                .statusCode(200)
+                .matches("$.items[0].snippet.title","Interesting Facts");
     }
 }

@@ -39,4 +39,7 @@ public class ResponseOptions {
         return this;
     }
 
+    public RequestBuilder buildNewRequest() {
+        return new RequestBuilder(responseBody);
+    }
 }
