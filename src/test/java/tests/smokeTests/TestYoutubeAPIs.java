@@ -9,7 +9,7 @@ import java.io.IOException;
 public class TestYoutubeAPIs {
 
     @Test
-    public void testSearchWithGivenQuery() throws IOException {
+    public void testSearchAPIWithGivenQuery() throws IOException {
 
         String searchUrl = "https://www.googleapis.com/youtube/v3/search";
         String API_KEY = dbReader.getKey();
