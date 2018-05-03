@@ -10,7 +10,7 @@ public class ResponseOptions {
     private HttpResponse response;
     private String responseBody;
 
-    private String getResponseAsString(InputStream inputStream) throws IOException {
+    private String readStringFromInputStream(InputStream inputStream) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         String contentString = "";
         while (true) {
@@ -25,7 +25,7 @@ public class ResponseOptions {
 
     public ResponseOptions(HttpResponse response) throws IOException {
         this.response = response;
-        this.responseBody = getResponseAsString(response.getContent());
+        this.responseBody = readStringFromInputStream(response.getContent());
     }
 
     public ResponseOptions statusCode(int expectedCode) {
