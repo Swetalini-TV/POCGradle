@@ -3,16 +3,24 @@ package tests.smokeTests;
 import DBClient.dbReader;
 import clients.Client;
 import org.testng.annotations.Test;
+import utils.PropertyFileReader;
 
 import java.io.IOException;
 
 public class TestYoutubeAPIs {
+    private String searchUrl = "";
+    private String channelUrl = "";
+    private String API_KEY = "";
+
+    public TestYoutubeAPIs() {
+        PropertyFileReader propertyFileReader = new PropertyFileReader();
+        this.searchUrl = propertyFileReader.getSearchAPI();
+        this.channelUrl = propertyFileReader.getChannelAPI();
+        this.API_KEY = dbReader.getKey();
+    }
 
     @Test
     public void testSearchAPIWithGivenQuery() throws IOException {
-
-        String searchUrl = "https://www.googleapis.com/youtube/v3/search";
-        String API_KEY = dbReader.getKey();
 
         Client.when()
                 .given(searchUrl)
@@ -30,8 +38,6 @@ public class TestYoutubeAPIs {
 
     @Test
     public void testChannelsAPIWithGivenQuery() throws IOException {
-        String channelUrl = "https://www.googleapis.com/youtube/v3/channels";
-        String API_KEY = dbReader.getKey();
 
         Client.when()
                 .given(channelUrl)
@@ -42,14 +48,11 @@ public class TestYoutubeAPIs {
                 .then()
                 .statusCode(200)
                 .matches("$.items[0].snippet.title", "Interesting Facts")
-                .matches("$.items[0].statistics.viewCount", "267490408");
+                .matches("$.items[0].statistics.viewCount", "267579041");
     }
 
     @Test
     public void testSearchAndChannelAPIChaining() throws IOException {
-        String searchUrl = "https://www.googleapis.com/youtube/v3/search";
-        String channelUrl = "https://www.googleapis.com/youtube/v3/channels";
-        String API_KEY = dbReader.getKey();
 
         Client.when()
                 .given(searchUrl)
@@ -69,6 +72,6 @@ public class TestYoutubeAPIs {
                 .get()
                 .then()
                 .statusCode(200)
-                .matches("$.items[0].snippet.title","Interesting Facts");
+                .matches("$.items[0].snippet.title", "Interesting Facts");
     }
 }
