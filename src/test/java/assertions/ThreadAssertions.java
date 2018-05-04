@@ -2,10 +2,13 @@ package assertions;
 
 import com.google.api.client.http.HttpResponse;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class ThreadAssertions {
 
+    SoftAssert softAssert = new SoftAssert();
+
     public void assertAllThreadsFoundForChannelID(HttpResponse response) {
-        Assert.assertEquals(200, response.getStatusCode());
+        softAssert.assertEquals(200, response.getStatusCode());
     }
 }
