@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 public class UserSearchesChannelAndStoresAllThreads {
 
-
+    @Test(groups = { "userJourneys"})
     public void userJourney() {
         SearchHelper searchHelp = new SearchHelper();
         SearchAssertions searchAssert = new SearchAssertions();
